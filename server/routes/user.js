@@ -1,7 +1,8 @@
 const express = require('express');
 const validator = require('validator');
 const db = require('../database.js');
-
+var nodemailer = require('nodemailer');
+const { transporter, sendEmail } = require('../email.js')
 const router = express.Router();
 
 router.put('/updateProfile', (req, res) => {
@@ -34,6 +35,16 @@ router.put('/updateProfile', (req, res) => {
                 let searchQuery = "Select * from user where user.iduser = (?)"
                 db.query(searchQuery, [iduser], (error, result) => {
                     if (!err && result.length > 0) {
+                        result = JSON.parse(JSON.stringify(result))
+                        console.log(result);
+                        const mailOptions = {
+                            from: "CMS.IIITA@outlook.com",
+                            to: result[0].Email,
+                            subject: "Profile Updated",
+                            text: "Your CMS Profile has been updated."
+                        };
+
+                        sendEmail(transporter, mailOptions);
                         res.status(200).json({ message: "success", user: result[0] });
                     } else if (err) {
                         res.status(400).json({ error: error.message })

@@ -57,15 +57,19 @@ router.post('/bookClassroom', async (req, res) => {
 
                     let sql1 = "SELECT Email FROM user WHERE Section=(?) and Type=(?)";
                     db.query(sql1, [section, "Student"], async (err1, Emails) => {
+
                         if (err1)
                             console.log(err1);
                         else {
+                            console.log(Emails);
+                            Emails = JSON.parse(JSON.stringify(Emails))
                             Emails.forEach(async (Email) => {
+                                console.log(Email);
                                 const mailOptions = {
-                                    from: "classroom.management.system@outlook.com",
-                                    to: Email,
+                                    from: "CMS.IIITA@outlook.com",
+                                    to: Email.Email,
                                     subject: "Class Scheduled.",
-                                    text: "You have a class scheduled from" + startTime + "-" + endTime + ". Login for more details"
+                                    text: "You have a class scheduled for the course " + course + " in Room No. " + idroom + " in CC3.\nStart Time: " + startTime + "\nEnd Time: " + endTime
                                 };
 
                                 sendEmail(transporter, mailOptions);

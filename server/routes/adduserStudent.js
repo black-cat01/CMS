@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
                             console.log(result);
 
                             const mailOptions = {
-                                from: 'classroom.management.system@outlook.com',
+                                from: 'CMS.IIITA@outlook.com',
                                 to: Email,
                                 subject: 'Your account has been createad. Login with the given credentials for more details.',
                                 text: 'Hello this is the Manager of CMS,\nI would like to tell you that your CMS account has been created. You can login with the credentials given below for more details.\nEmail: ' + Email + "  Password:" + Password
