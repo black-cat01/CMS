@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
             throw new Error('Email is invalid')
         }
 
-        const sqlQuery = "select * from user where Email = (?)"
+        const sqlQuery = "select * from prac.user where Email = (?)"
         db.query(sqlQuery, [Email], (err, result) => {
             if (err) {
                 res.status(400).json({ error: err.message })

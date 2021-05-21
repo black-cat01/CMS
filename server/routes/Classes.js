@@ -17,74 +17,87 @@ router.post('/bookClassroom', async (req, res) => {
         if (!err && result.length > 0) {
             res.status(200).json({ message: "You already have classes scheduled in the given duration" });
         }
-    })
-
-    let sclassclash = "select * from prac.classbook  where (section = (?)) and ((startTime >= (?) and startTime < (?)) or (endTime > (?) and endTime <= (?)) or (startTime <= (?)  and endTime >= (?)))"
-    await db.query(sclassclash, [section, startTime, endTime, startTime, endTime, startTime, endTime], async (err, result) => {
-        if (!err && result.length > 0) {
-            res.status(200).json({ message: "The mentioned section has a class in the duration" });
+        else if (err) {
+            res.status(400).json({ error: err1.message });
         }
-    })
-
-
-
-
-    let sqlQuery = "select idroom, idteacher, title, startTime, endTime, section, course from prac.classbook where (idroom = (?)) and ((startTime >= (?) and startTime < (?)) or (endTime > (?) and endTime <= (?)) or (startTime <= (?)  and endTime >= (?)))"
-
-    db.query(sqlQuery, [idroom, startTime, endTime, startTime, endTime, startTime, endTime], async (err, result) => {
-        if (!err && result.length > 0) {
-            let availableClassRooms = [];
-            classRooms.forEach(async (classRoom) => {
-                await db.query(sqlQuery, [classRoom, startTime, endTime, startTime, endTime, startTime, endTime], async (error, searchResult) => {
-                    if (!searchResult.length) {
-                        console.log(classRoom);
-                        availableClassRooms.push(classRoom);
-                    }
-                    if (classRooms.indexOf(classRoom) === classRooms.length - 1) {
-                        res.status(200).json({ classesAlreadyScheduled: result, availableClassRooms });
-                    }
-                });
-            });
-
-            // res.status(200).json({meetingAlreadyScheduled : result, availableMeetRooms});
-        } else if (!err) {
-            sqlQuery = "INSERT INTO classbook (idroom, idteacher,  title, startTime, endTime, section, course) VALUES (?,?,?,?,?,?,?)";
-            await db.query(sqlQuery, [idroom, idteacher, title, startTime, endTime, section, course], async (err1, result) => {
-                if (err1) {
-                    res.status(400).json({ error: err1.message });
-                } else {
-                    console.log(result);
-
-                    let sql1 = "SELECT Email FROM user WHERE Section=(?) and Type=(?)";
-                    db.query(sql1, [section, "Student"], async (err1, Emails) => {
-
-                        if (err1)
-                            console.log(err1);
-                        else {
-                            console.log(Emails);
-                            Emails = JSON.parse(JSON.stringify(Emails))
-                            Emails.forEach(async (Email) => {
-                                console.log(Email);
-                                const mailOptions = {
-                                    from: "CMS.IIITA@outlook.com",
-                                    to: Email.Email,
-                                    subject: "Class Scheduled.",
-                                    text: "You have a class scheduled for the course " + course + " in Room No. " + idroom + " in CC3.\nStart Time: " + startTime + "\nEnd Time: " + endTime
-                                };
-
-                                sendEmail(transporter, mailOptions);
-                            });
-                        }
-                    });
-
-
-
+        else {
+            let sclassclash = "select * from prac.classbook  where (section = (?)) and ((startTime >= (?) and startTime < (?)) or (endTime > (?) and endTime <= (?)) or (startTime <= (?)  and endTime >= (?)))"
+            await db.query(sclassclash, [section, startTime, endTime, startTime, endTime, startTime, endTime], async (err, result) => {
+                if (!err && result.length > 0) {
+                    res.status(200).json({ message: "The mentioned section has a class in the duration" });
                 }
-            });
-            res.status(200).json({ message: "success" });
+                else if (err) {
+                    res.status(400).json({ error: err1.message });
+                }
+                else {
+                    let sqlQuery = "select idroom, idteacher, title, startTime, endTime, section, course from prac.classbook where (idroom = (?)) and ((startTime >= (?) and startTime < (?)) or (endTime > (?) and endTime <= (?)) or (startTime <= (?)  and endTime >= (?)))"
+
+                    db.query(sqlQuery, [idroom, startTime, endTime, startTime, endTime, startTime, endTime], async (err, result) => {
+                        if (!err && result.length > 0) {
+                            let availableClassRooms = [];
+                            classRooms.forEach(async (classRoom) => {
+                                await db.query(sqlQuery, [classRoom, startTime, endTime, startTime, endTime, startTime, endTime], async (error, searchResult) => {
+                                    if (!searchResult.length) {
+                                        console.log(classRoom);
+                                        availableClassRooms.push(classRoom);
+                                    }
+                                    if (classRooms.indexOf(classRoom) === classRooms.length - 1) {
+                                        res.status(200).json({ classesAlreadyScheduled: result, availableClassRooms });
+                                    }
+                                });
+                            });
+
+                            // res.status(200).json({meetingAlreadyScheduled : result, availableMeetRooms});
+                        } else if (!err) {
+                            sqlQuery = "INSERT INTO classbook (idroom, idteacher,  title, startTime, endTime, section, course) VALUES (?,?,?,?,?,?,?)";
+                            await db.query(sqlQuery, [idroom, idteacher, title, startTime, endTime, section, course], async (err1, result) => {
+                                if (err1) {
+                                    res.status(400).json({ error: err1.message });
+                                } else {
+                                    console.log(result);
+
+                                    let sql1 = "SELECT Email FROM user WHERE Section=(?) and Type=(?)";
+                                    db.query(sql1, [section, "Student"], async (err1, Emails) => {
+
+                                        if (err1)
+                                            console.log(err1);
+                                        else {
+                                            console.log(Emails);
+                                            Emails = JSON.parse(JSON.stringify(Emails))
+                                            Emails.forEach(async (Email) => {
+                                                console.log(Email);
+                                                const mailOptions = {
+                                                    from: "CMS.IIITA@outlook.com",
+                                                    to: Email.Email,
+                                                    subject: "Class Scheduled.",
+                                                    text: "You have a class scheduled for the course " + course + " in Room No. " + idroom + " in CC3.\nStart Time: " + startTime + "\nEnd Time: " + endTime
+                                                };
+
+                                                sendEmail(transporter, mailOptions);
+                                            });
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+                            res.status(200).json({ message: "success" });
+                        }
+                        //res.status(200).json({ message: "success" });
+                    })
+                }
+            })
         }
-        //res.status(200).json({ message: "success" });
+
     })
+
+
+
+
+
+
+
 
 })
 
@@ -139,4 +152,3 @@ router.get('/allClassesAdmin', async (req, res) => {
 })
 
 module.exports = router;
-

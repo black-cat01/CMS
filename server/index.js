@@ -9,7 +9,7 @@ const userRouter = require('./routes/user.js');
 const adduserTeacherRouter = require('./routes/adduserTeacher.js');
 const adduserStudentRouter = require('./routes/adduserStudent.js');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 const app = express();
 
