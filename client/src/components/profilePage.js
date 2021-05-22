@@ -161,7 +161,7 @@ const ProfilePage = () => {
               {user.Type === "Admin" ?
                 <Tab
                   className={classes.Tab}
-                  label={<span>View All Meetings</span>}
+                  label={<span>View All Classes</span>}
                   icon={<ViewIcon />}
                   key={"View All Meetings"}
                 /> :
