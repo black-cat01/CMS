@@ -2,11 +2,12 @@ import react, {useContext} from "react";
 import {useHistory} from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
+
 
 import currentUserContext from "../context/userContext";
 
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign : "center",
         maxHeight : "29px",
         fontSize : "12px",
+        backgroundColor: "black",
+        color: "white",
         [theme.breakpoints.down("sm")] : {
             fontSize : "9px",
             marginRight : "7px",
@@ -61,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth : "70px",
         textAlign : "center",
         minHeight : "30px",
+        backgroundColor: "black",
         [theme.breakpoints.down("sm")] : {
             fontSize : "10px",
             marginRight : "7px",
@@ -80,14 +84,14 @@ const TopPageDesign = () => {
     return (
         <Container className = {classes.container}>
             <div style={{display : "flex"}}>
-                <CalendarTodayIcon className = {classes.scheduleIcon} style={{color:"black"}}/>
+                <ClassRoundedIcon className = {classes.scheduleIcon} style={{color:"black"}}/>
                 <div className = {classes.heading} style={{color:"black"}}>
                     CMS
                 </div>
             </div>
                 {
                     user ?
-                    <div style = {{display : "flex"}} style={{color:"#412378"}}>
+                    <div style = {{display : "flex"}} style={{color:"black"}}>
                         <Chip
                             icon = {<FaceIcon/>}
                             label= {`${user.Name}`}
@@ -95,7 +99,7 @@ const TopPageDesign = () => {
                             color="primary"
                             className = {classes.chip}
                         />
-                        <Button variant="contained" color="primary" className = {classes.Button} onClick = {() => {
+                        <Button variant="contained" className = {classes.Button} onClick = {() => {
                             setUser(null)
                             localStorage.setItem('user', JSON.stringify(null))
                             history.push('/')
@@ -105,9 +109,7 @@ const TopPageDesign = () => {
                     </div>
                     :
                     <div style = {{display : "flex"}}>
-                        <Button variant="contained" color="primary" className = {classes.Button} onClick = {() => history.push('/register')}>
-                            Sign Up
-                        </Button>
+                        
                         <Button variant="contained" color="primary" className = {classes.Button} onClick = {() => history.push('/login')}>
                             Log In
                         </Button> 

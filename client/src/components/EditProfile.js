@@ -60,7 +60,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     submitButton  : {
-        marginTop : 30
+        marginTop : 30,
+        backgroundColor : "black"
     }
 }));
 

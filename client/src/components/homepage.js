@@ -6,14 +6,17 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+
+
 const useStyles = makeStyles((theme) => ({
     Container : {
         height : "80vh",
         width  : "100%",
-        backgroundImage : `url("https://images.unsplash.com/photo-1486848538113-ce1a4923fbc5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80")`,
+        backgroundImage : `url("https://image.freepik.com/free-vector/students-classroom-flat-vector-illustration_74855-6663.jpg")`,
+    
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "left center",
-        backgroundSize: "80% 80%",
+        backgroundPosition: "25% 50%",
+        backgroundSize: "40% 40%",
         backgroundAttachment: "fixed",
         display : "flex",
         flexDirection : "row",
@@ -38,13 +41,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("sm")] : {
             width : "50%",
             margin : 0 
-        }
+        },
+        fontFamily: "Times New Roman",
+        fontSize: "40px"
     },
     Button : {
         marginBottom : 20,
+        marginTop: 10,
         borderRadius : "5px",
         transition: "all .1s ease-in-out",
-        backgroundColor : "#2B65EC",
+        backgroundColor : "black",
         minWidth : "150px",
         marginRight : "20px",
         "&:hover" : {
@@ -82,7 +88,7 @@ const HomePage = () => {
                     {/* <Button variant="contained" className = {classes.Button}>
                         <Link to = "/register" className = {classes.toLink}> Register </Link>
                     </Button> */}
-
+                    <p style={{marginLeft:'5px'}}>Manage your classrooms here.</p>
                     <Button variant="contained" className = {classes.Button}>
                         <Link to = "/login" className = {classes.toLink}> Login </Link>
                     </Button>

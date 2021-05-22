@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
         display : "flex",
         flexDirection : "column",
         justifyContent : "center",
-        alignItems : "flex-end",
+        alignItems : "center",
         marginLeft : 0,
         marginRight :0,
         [theme.breakpoints.down("sm")] : {
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom : 20,
         borderRadius : "5px",
         transition: "all .1s ease-in-out",
-        backgroundColor : "#2B65EC",
+        backgroundColor : "black",
         minWidth : "150px",
         marginRight : "20px",
         "&:hover" : {
@@ -175,12 +175,16 @@ const Dashboard = (props) => {
                 </div>
                 {user.Type === "Admin" ?  <div >
                 <Container className = {classes.btnContainer}>
-                        <Button variant="contained" className = {classes.Button}>
+                        <Button variant="contained" color="secondary" className = {classes.Button} >
                             <Link to = "/adduserStudent" className = {classes.toLink}> Register Student </Link>
                         </Button>
     
                         <Button variant="contained" className = {classes.Button}>
                             <Link to = "/adduserTeacher" className = {classes.toLink}> Register Teacher </Link>
+                        </Button>
+
+                        <Button variant="contained" className = {classes.Button}>
+                            <Link to = "/addRoom" className = {classes.toLink}> Register Room </Link>
                         </Button>
                 </Container>
             </div> : <></>

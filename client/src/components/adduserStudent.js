@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     submitButton  : {
-        margin : 30
+        margin : 30,
+        backgroundColor : "black"
     }
 }))
 
@@ -169,11 +170,9 @@ const AddStudent = () => {
         <div className={classes.inputContainer}>
           <TextInput required id="standard-required" value={passwordValue} type="password" onChange={changePasswordValue} variant="outlined" label="Password" helperText={err.code === 2 ? err.error : ""}/>    
         </div> 
-        <Button className={classes.submitButton} variant="contained" color="primary" onClick = {handleClick}>Create Your Account</Button>   
+        <Button className={classes.submitButton} variant="contained" color="primary" onClick = {handleClick}>Add Account</Button>   
 
-        <div style = {{fontSize : "15px"}}>
-         have an account? <Link to = "/login" style = {{fontSize : "17px", textDecoration : "None", color : "#0000A0"}}>Login&#8594;</Link>
-        </div>
+        
       </Card>
       </Container>
   )

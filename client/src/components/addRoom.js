@@ -1,12 +1,18 @@
-import React , {useState} from "react";
+import React , {useState , useContext} from "react";
 import {Link} from "react-router-dom";
 import { Card, Container } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles"
+import {makeStyles} from "@material-ui/core/styles";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import TextInput from "@material-ui/core/TextField";
 import {useHistory} from "react-router-dom";
+import FormHelperText from '@material-ui/core/FormHelperText';
+import currentUserContext from "../context/userContext"
 
 import axios from "axios";
 
@@ -60,12 +66,12 @@ const TabPanel = ({index , value}) => {
     )
 }
 
-const AddTeacher = () => {
+const AddRoom = () => {
   const [value, setValue] = useState(0)
   const [err, seterr] = useState({});
   const [nameValue, setNameValue] = useState("")
-  const [emailValue , setEmailValue] = useState("")
-  const [passwordValue , setPasswordValue] = useState("")
+  const {roomid, setRoomid}= useContext(currentUserContext)
+  
   const history = useHistory();
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -83,15 +89,7 @@ const AddTeacher = () => {
     setNameValue(value)
   }
 
-  const changeEmailValue = (e) => {
-   const {value} = e.target;
-   setEmailValue(value);
-  }
-
-  const changePasswordValue = (e) => {
-    const {value} = e.target;
-    setPasswordValue(value);
-  }
+  
 
   const handleError =  (newerr) => {
      seterr(newerr)
@@ -99,19 +97,14 @@ const AddTeacher = () => {
 
   const handleClick = async () => {
     handleError({})
-    const url = "http://localhost:5001/adduserTeacher"
-    const userCategory = 'Teacher' 
+    const url = "http://localhost:5001/addClassroom"
+    
     try {
-          const response = await axios.post(url, {
-            Name : nameValue,
-            Email : emailValue,
-            Password : passwordValue,
-            Type : userCategory
-          })
+          const response = await axios.post(url)
 
           const {code, error} = response.data;
           if(response.data.message === "success") {
-              alert('Registration Sucessfull!')
+              alert('Classroom Sucessfully Added!')
               history.push('/Profile');
           }
           seterr({code, error}) 
@@ -126,21 +119,17 @@ const AddTeacher = () => {
   return (
       <Container className={classes.container}>
       <Card className={classes.card}>
-         <div className={classes.header}>Register a</div>
+         <div className={classes.header}>Add a</div>
          <Tabs className={classes.tabContainer} value={value} onChange={handleChange} aria-label="simple tabs example" centered>
-          <Tab label="Teacher" />
+          <Tab label="ClassRoom" {...a11yProps(0)} />
         </Tabs>
         
-        <div className={classes.inputContainer}>
-          <TextInput required id="standard-required" value={nameValue} onChange={changeNameValue} variant="outlined" label="Name" helperText={err.code === 0 ? err.error : ""}/>    
-        </div> 
-        <div className={classes.inputContainer}>
-          <TextInput required id="standard-required" value={emailValue} onChange={changeEmailValue} variant="outlined" label="Email" helperText={err.code === 1 ? err.error : ""}/>    
-        </div>
-        <div className={classes.inputContainer}>
-          <TextInput required id="standard-required" value={passwordValue} type="password" onChange={changePasswordValue} variant="outlined" label="Password" helperText={err.code === 2 ? err.error : ""}/>    
-        </div> 
-        <Button className={classes.submitButton} variant="contained" color="primary" onClick = {handleClick}>Create Your Account</Button>   
+        {/* <div className={classes.inputContainer}>
+          <TextInput required id="standard-required" value={nameValue} onChange={changeNameValue} variant="outlined" label="RoomNo." helperText={err.code === 0 ? err.error : ""}/>    
+        </div>  */}
+        
+        
+        <Button className={classes.submitButton} variant="contained" color="primary" onClick = {handleClick}>Submit</Button>   
 
         
       </Card>
@@ -150,4 +139,4 @@ const AddTeacher = () => {
 
 
 
-export default AddTeacher
+export default AddRoom

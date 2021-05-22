@@ -5,6 +5,7 @@ import TopPageDesign from './components/topPageDesign'
 import Homepage from './components/homepage.js'
 import AddStudent from './components/adduserStudent'
 import AddTeacher from './components/adduserTeacher'
+import AddRoom from './components/addRoom'
 import Login from './components/login.js'
 import ProfilePage from './components/profilePage.js'
 import currentUserContext from './context/userContext.js'
@@ -22,6 +23,7 @@ function App() {
 
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(null);
+  const [roomid, setRoomid] = useState(null);
   const [upcomingMeetings, setUpcomingMeetings] = useState({})
   const [newMeet, setNewMeet] = useState(0)
   const history = useHistory();
@@ -37,7 +39,7 @@ function App() {
         let url = "http://localhost:5001/user/findUserById"
 
         try {
-          const response = await axios.get(url , {
+          let response = await axios.get(url , {
             params : {
             iduser : previousUser.iduser
             }
@@ -45,7 +47,13 @@ function App() {
 
           history.push(`${window.location.pathname}`)
           setUser(previousUser);
-          
+
+          url="http://localhost:5001/Classes/allClassrooms"
+          response=await axios.get(url)
+          const { allclassRooms, error} = response.data
+          setRoomid(allclassRooms)
+          console.log(allclassRooms)
+
         } catch(err) {
           console.log(err)
           history.push('/login')
@@ -112,7 +120,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <currentUserContext.Provider value = {{user, setUser, newMeet, setNewMeet, upcomingMeetings}}>
+      <currentUserContext.Provider value = {{user, setUser, newMeet, setNewMeet, upcomingMeetings, roomid, setRoomid}}>
         <TopPageDesign />
         
         <Switch>
@@ -130,6 +138,9 @@ function App() {
         </Switch>
         <Switch>
           <Route exact path = "/adduserTeacher" component = {AddTeacher} />
+        </Switch>
+        <Switch>
+          <Route exact path = "/addRoom" component = {AddRoom} />
         </Switch>
         
       </currentUserContext.Provider>

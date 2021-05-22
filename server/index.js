@@ -8,6 +8,8 @@ const ClassesRouter = require('./routes/Classes.js');
 const userRouter = require('./routes/user.js');
 const adduserTeacherRouter = require('./routes/adduserTeacher.js');
 const adduserStudentRouter = require('./routes/adduserStudent.js');
+const addClassroomRouter = require('./routes/addClassroom.js');
+
 
 const PORT = process.env.PORT || 5001;
 
@@ -25,6 +27,7 @@ app.use('/adduserStudent', adduserStudentRouter);
 app.use('/login', loginRouter);
 app.use('/Classes', ClassesRouter);
 app.use('/user', userRouter);
+app.use('/addClassroom', addClassroomRouter);
 
 app.listen(PORT, () => {
     console.log(`server running on ${PORT}`)

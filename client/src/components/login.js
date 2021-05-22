@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Login = () => {
-  const {user,setUser} = useContext(currentUserContext)
+  const {user,setUser, roomid, setRoomid} = useContext(currentUserContext)
   const [value, setValue] = useState(0)
   const [err, seterr] = useState({})
   const [emailValue , setEmailValue] = useState("")
@@ -78,13 +78,17 @@ const Login = () => {
     handleError({})
     let url = "http://localhost:5001/login"
     try {
-      const response = await axios.post(url, {
+      let response = await axios.post(url, {
         Email : emailValue,
         Password : passwordValue,
       })
       const {message, user, code, error} = response.data;
       console.log(user)
       if(message === "success") {
+        let url="http://localhost:5001/Classes/allClassrooms"
+          response=await axios.get(url)
+          const { allClassrooms, error} = response.data
+          setRoomid(allClassrooms)
         setNewUser(user);
         localStorage.setItem('user', JSON.stringify(user));
 

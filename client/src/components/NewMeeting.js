@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddNewMeeting = (props) => {
   const classes = useStyles()
-  const {user,newMeet, setNewMeet} = useContext(currentUserContext)
+  const {user,newMeet, setNewMeet, roomid} = useContext(currentUserContext)
   const {changeSelectedMode,changeIndicatortab} = props
   const localDate = new Date(new Date().getTime() + 330*60000);
   const [err,setErr] = useState({})
@@ -302,14 +302,14 @@ const AddNewMeeting = (props) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={roomId}
+          value={roomid}
           onChange={handleRoomChange}
-        >
-          <MenuItem value={1}>Room1</MenuItem>
-          <MenuItem value={2}>Room2</MenuItem>
-          <MenuItem value={3}>Room3</MenuItem>
-          <MenuItem value={4}>Room4</MenuItem>
-          <MenuItem value={5}>Room5</MenuItem>
+        > {roomid ?
+           roomid.map(id=>{
+          <MenuItem value={id}>Room {id}</MenuItem>
+        }):
+        <></>
+        }
         </Select>
       </div>
       </Grid>
