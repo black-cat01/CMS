@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
                 res.status(200).json({ code: 0, error: "Email not registered. Please try again." })
             } else if (Password === result[0].Password) {
                 const mailOptions = {
-                    from: 'CMS.IIITA@outlook.com',
+                    from: 'classroom.management.system@outlook.com',
                     to: Email,
                     subject: 'Login',
                     text: 'Someone logged into your CMS account. Is it you??'

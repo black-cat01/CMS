@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
                         Emails.forEach(async (Email) => {
                             console.log(Email);
                             const mailOptions = {
-                                from: "CMS.IIITA@outlook.com",
+                                from: "classroom.management.system@outlook.com",
                                 to: Email.Email,
                                 subject: "New Classroom Registered.",
                                 text: "Room No. " + result.insertId + " has been successfully registered."

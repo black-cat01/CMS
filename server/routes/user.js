@@ -38,7 +38,7 @@ router.put('/updateProfile', (req, res) => {
                         result = JSON.parse(JSON.stringify(result))
                         console.log(result);
                         const mailOptions = {
-                            from: "CMS.IIITA@outlook.com",
+                            from: "classroom.management.system@outlook.com",
                             to: result[0].Email,
                             subject: "Profile Updated",
                             text: "Your CMS Profile has been updated."

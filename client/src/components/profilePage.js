@@ -29,70 +29,81 @@ import AllMeetings from './DisplayAllMeetings.js'
 
 import { useHistory } from 'react-router';
 
-const studentModes = ["Dashboard","Edit Profile","View My Meetings"]
-const teacherModes = ["Dashboard","Edit Profile","View My Meetings","Add New Meeting"]
-const adminModes = ["Dashboard","Edit Profile","View My Meetings","Add New Meeting","View All Meetings"]
+const studentModes = ["Dashboard", "Edit Profile", "View My Meetings"]
+const teacherModes = ["Dashboard", "Edit Profile", "View My Meetings", "Add New Meeting"]
+const adminModes = ["Dashboard", "Edit Profile", "View My Meetings", "Add New Meeting", "View All Meetings"]
 
 const useStyles = makeStyles((theme) => ({
   body: {
     display: 'flex',
-    flexDirection : 'column',
-    width : "100%"
+    flexDirection: 'column',
+    width: "100%"
   },
   root: {
+    display: 'flex',
     flexGrow: 1,
-    width: "100%",
+    minWidth: "100%",
     margin: "auto",
-    justifyContent: "space-between",
-    alignmItems : "center"
+    justifyContent: "space-around",
+    alignItems: "center",
+    "&>header": {
+      minWidth: "100%",
+      alignItems: "center",
+      "&>div": {
+        minWidth: "100%"
+      }
+    }
   },
   Indicator: {
-      height: 3,
-      boxShadow: 'inset 0 0 6px rgba(0,0,255,.5)',
-      transform: "scale(.8)"
+    height: 3,
+    boxShadow: 'inset 0 0 6px rgba(0,0,0,0)',
+    transform: "scale(.8)",
+
+
   },
-  Tab : {
-    minWidth: "20%", 
-    fontWeight: "400", 
+  Tab: {
+    marginRight: "20px",
+    minWidth: "20%",
+    fontWeight: "400",
     fontSize: 16,
-    [theme.breakpoints.down("sm")] : {
-        width: "50%",
-        fontSize: 14
+    [theme.breakpoints.down("sm")]: {
+      width: "50%",
+      fontSize: 14
     },
-    [theme.breakpoints.down("xs")] : {
-        width: "50%",
-        fontSize: 12
+    [theme.breakpoints.down("xs")]: {
+      width: "50%",
+      fontSize: 12
     }
   },
   content: {
     flexGrow: 1,
-    [theme.breakpoints.down("sm")] : {
-      width : "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
     }
   }
 }));
 
 const ProfilePage = () => {
-  
+
   const [selectedMode, setSelectedMode] = useState("Dashboard");
-  
-  const {user,setUser} = useContext(currentUserContext)
+
+  const { user, setUser } = useContext(currentUserContext)
   const history = useHistory()
   const classes = useStyles()
-  const [value,setValue] = useState(0)
+  const [value, setValue] = useState(0)
   // console.log(user);
   const Logout = () => {
     console.log("Logged out!!")
     setUser(null)
-    localStorage.setItem('user',JSON.stringify(null));
+    localStorage.setItem('user', JSON.stringify(null));
     history.push('/')
   }
 
-  const handleChange = (event,newValue) => {
+  const handleChange = (event, newValue) => {
     const modes = user.Type === "Student" ? studentModes : user.Type === "Teacher" ? teacherModes : adminModes
     console.log(modes)
     console.log(newValue)
-    if(modes[newValue] === "Logout") {
+    if (modes[newValue] === "Logout") {
       Logout();
       return;
     }
@@ -103,83 +114,83 @@ const ProfilePage = () => {
 
 
   return (
-  <div className={classes.body}>
-    { user ?
-    <div className = {classes.root}>
-     <AppBar position="static" color="default">
-      <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="none"
-          textColor="primary"
-          classes={{ indicator: classes.Indicator}}
-          aria-label="scrollable article navigation bar"
-      >
-          <Tab 
-          className={classes.Tab} 
-          label={<span>Dashboard</span>} 
-          icon={<DashboardIcon />}
-          key={"Dashboard"}
-          />
-          <Tab 
-          className={classes.Tab} 
-          label={<span>Edit Profile</span>} 
-          icon={<EditIcon />}
-          key={"Edit Profile"}
-          />
-          {user.Type ==="Teacher" || user.Type ==="Student" ?
-          <Tab 
-          className={classes.Tab} 
-          label={<span>View My Meetings</span>} 
-          icon={<ViewIcon />}
-          key={"View My Meetings"}
-          />
-          :
-          <></>
-          }
-          {user.Type ==="Teacher" ?
-          <Tab 
-          className={classes.Tab} 
-          label={<span>Add New Meeting</span>} 
-          icon={<BookIcon />}
-          key={"Add New Meeting"}
-          />:<></>
-          }
-          {user.Type === "Admin" ? 
-          <Tab 
-          className={classes.Tab} 
-          label={<span>View All Meetings</span>} 
-          icon={<ViewIcon />}
-          key={"View All Meetings"}
-          />: 
-          <></>
-          } 
-      </Tabs>
-    </AppBar> 
+    <div className={classes.body}>
+      { user ?
+        <div className={classes.root}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="on"
+              indicatorColor="none"
+              textColor="secondary"
+              classes={{ indicator: classes.Indicator }}
+              aria-label="scrollable article navigation bar"
+            >
+              <Tab
+                className={classes.Tab}
+                label={<span>Dashboard</span>}
+                icon={<DashboardIcon />}
+                key={"Dashboard"}
+              />
+              <Tab
+                className={classes.Tab}
+                label={<span>Edit Profile</span>}
+                icon={<EditIcon />}
+                key={"Edit Profile"}
+              />
+              {user.Type === "Teacher" || user.Type === "Student" ?
+                <Tab
+                  className={classes.Tab}
+                  label={<span>View My Meetings</span>}
+                  icon={<ViewIcon />}
+                  key={"View My Meetings"}
+                />
+                :
+                <></>
+              }
+              {user.Type === "Teacher" ?
+                <Tab
+                  className={classes.Tab}
+                  label={<span>Add New Meeting</span>}
+                  icon={<BookIcon />}
+                  key={"Add New Meeting"}
+                /> : <></>
+              }
+              {user.Type === "Admin" ?
+                <Tab
+                  className={classes.Tab}
+                  label={<span>View All Meetings</span>}
+                  icon={<ViewIcon />}
+                  key={"View All Meetings"}
+                /> :
+                <></>
+              }
+            </Tabs>
+          </AppBar>
+        </div>
+        :
+        <></>
+      }
+      <main className={classes.content}>
+        {
+          selectedMode === "Dashboard" ? <Dashboard changeSelectedMode={setSelectedMode} changeIndicatortab={setValue} /> : <></>
+        }
+        {
+          selectedMode === "Add New Meeting" ? <AddNewMeeting changeSelectedMode={setSelectedMode} changeIndicatortab={setValue} /> : <></>
+        }
+        {
+          selectedMode === "View My Meetings" ? <MyMeetings changeSelectedMode={setSelectedMode} changeIndicatortab={setValue} /> : <></>
+        }
+        {
+          selectedMode === "Edit Profile" ? <EditProfile changeSelectedMode={setSelectedMode} changeIndicatortab={setValue} /> : <></>
+        }
+        {
+          selectedMode === "View All Meetings" ? <AllMeetings changeSelectedMode={setSelectedMode} changeIndicatortab={setValue} /> : <></>
+        }
+      </main>
     </div>
-    :
-    <></>
-    }
-    <main className={classes.content}>
-      {
-        selectedMode === "Dashboard" ? <Dashboard changeSelectedMode = {setSelectedMode} changeIndicatortab = {setValue}/> : <></>
-      }
-      {
-        selectedMode === "Add New Meeting" ? <AddNewMeeting changeSelectedMode = {setSelectedMode} changeIndicatortab = {setValue}/> : <></>
-      }
-      {
-        selectedMode === "View My Meetings" ? <MyMeetings changeSelectedMode = {setSelectedMode} changeIndicatortab = {setValue}/> : <></>
-      }
-      {
-        selectedMode === "Edit Profile" ? <EditProfile changeSelectedMode = {setSelectedMode} changeIndicatortab = {setValue}/> : <></>
-      }
-      {
-        selectedMode === "View All Meetings" ? <AllMeetings changeSelectedMode = {setSelectedMode} changeIndicatortab = {setValue}/> : <></>
-      }
-    </main>
-  </div>
   )
 }
 

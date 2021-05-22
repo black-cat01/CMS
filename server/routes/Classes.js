@@ -80,7 +80,7 @@ router.post('/bookClassroom', async (req, res) => {
                                             Emails.forEach(async (Email) => {
                                                 console.log(Email);
                                                 const mailOptions = {
-                                                    from: "CMS.IIITA@outlook.com",
+                                                    from: "classroom.management.system@outlook.com",
                                                     to: Email.Email,
                                                     subject: "Class Scheduled.",
                                                     text: "You have a class scheduled for the course " + course + " in Room No. " + idroom + " in CC3.\nStart Time: " + startTime.replace('T', ' ') + "\nEnd Time: " + endTime.replace('T', ' ')

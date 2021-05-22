@@ -226,6 +226,14 @@ const AddNewMeeting = (props) => {
       console.log(response)
       setOpenLoader(false)
       const { message, availableClassRooms, classesAlreadyScheduled } = response.data
+      if (message === "You already have classes scheduled in the given duration") {
+        alert("You already have classes scheduled in the given duration")
+      }
+
+      if (message === "The mentioned section has a class in the duration") {
+        alert("The mentioned section has a class in the duration")
+      }
+
       if (message === "success") {
 
         alert("New Meeting has been created")
@@ -241,8 +249,12 @@ const AddNewMeeting = (props) => {
         setOpen(true)
       }
 
+
+
+
     } catch (error) {
       setOpenLoader(false)
+
       console.log(error)
     }
   }
@@ -296,7 +308,7 @@ const AddNewMeeting = (props) => {
           }}
           onBlur={(e) => {
             if (e.target.value < startDate) {
-              alert("Invalid Ending Time. Meeting can't end before it starts")
+              alert("Invalid Ending Time. Class can't end before it starts")
               setEndDate(`${localDate.toISOString().slice(0, 19)}`)
               return;
             }
@@ -348,7 +360,7 @@ const AddNewMeeting = (props) => {
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
-        <ModelInfo availableMeetingRooms={availableClassrooms} prePlannedClasses={prePlannedClasses} />
+        <ModelInfo availableClassRooms={availableClassrooms} classesAlreadyScheduled={prePlannedClasses} />
 
       </Modal>
 

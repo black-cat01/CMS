@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontWeight: "bold",
-    color: "#0846B0",
+    color: "#080807",
     fontSize: "25px",
     textAlign: "center",
     fontFamily: "emoji"
@@ -42,8 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submitButton: {
     margin: 30,
-    minWidth: "100%"
+    minWidth: "100%",
+    backgroundColor: "black",
+    color: "white"
   }
+
 }))
 
 
@@ -87,8 +90,8 @@ const Login = () => {
       if (message === "success") {
         url = "http://localhost:5001/Classes/allClassrooms"
         response = await axios.get(url)
-        const { allClassrooms, error } = response.data
-        setRoomId(allClassrooms)
+        const { allclassRooms, error } = response.data
+        setRoomId(allclassRooms)
         setNewUser(user);
         localStorage.setItem('user', JSON.stringify(user));
 
@@ -105,7 +108,7 @@ const Login = () => {
   return (
     <Container className={classes.container}>
       <Card className={classes.card}>
-        <div className={classes.header}>Login To MeetHere</div>
+        <div className={classes.header}>Login To CMS</div>
         <div className={classes.inputContainer}>
           <TextInput required id="standard-required" value={emailValue} onChange={changeEmailValue} variant="outlined" label="Email" helperText={err.code === 0 ? err.error : ""} />
         </div>

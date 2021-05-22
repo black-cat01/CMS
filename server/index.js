@@ -41,7 +41,7 @@ app.listen(PORT, () => {
         }
         else {
             const addAd = "INSERT INTO user (Name, Email, Password, Type) VALUES (?,?,?,?)";
-            await db.query(addAd, ["Admin Sharma", "AdminSharma@gmail.com", "abcabc", "Admin"], async (err1) => {
+            await db.query(addAd, ["Admin Sharma", "adsharma202020@gmail.com", "abcabc", "Admin"], async (err1) => {
                 if (err1) {
                     console.log(err1);
                 }
