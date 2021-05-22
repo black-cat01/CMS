@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     btnContainer : {
-        width : "20%",
+        width : "50%",
         display : "flex",
         flexDirection : "column",
         justifyContent : "space-between",
