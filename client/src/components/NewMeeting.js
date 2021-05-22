@@ -1,5 +1,5 @@
 import "date-fns";
-import React,{useState,useContext} from "react";
+import React, { useState, useContext } from "react";
 import currentUserContext from "../context/userContext"
 
 import ModelInfo from "./ModelInfo.js"
@@ -22,38 +22,38 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from "@material-ui/pickers";
-import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles'; 
-import { Chip , CircularProgress, Paper } from "@material-ui/core";
+import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
+import { Chip, CircularProgress, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root : {
-    display : "flex",
+  root: {
+    display: "flex",
     flexDirection: "column",
-    alignItems : "center",
-    justifycontent : "flex-start",
-    paddingTop : "40px",
-    [theme.breakpoints.down("sm")] : {
+    alignItems: "center",
+    justifycontent: "flex-start",
+    paddingTop: "40px",
+    [theme.breakpoints.down("sm")]: {
       width: "100%",
-      paddingTop : "20px",
+      paddingTop: "20px",
     }
   },
-  head : {
-    display : "flex",
-    flexDirection : "column",
+  head: {
+    display: "flex",
+    flexDirection: "column",
     margin: theme.spacing(1),
-    marginBottom : theme.spacing(3),
-    justifyContent : "start",
-    alignItems : "center",
-    [theme.breakpoints.down("sm")] : {
+    marginBottom: theme.spacing(3),
+    justifyContent: "start",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
       width: "100%"
     }
   },
-  name : {
+  name: {
     fontFamily: "emoji",
-    fontWeight : "300",
-    fontSize : 27,
-    [theme.breakpoints.down("sm")] : {
-      fontSize : 15
+    fontWeight: "300",
+    fontSize: 27,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 15
     }
   },
   container: {
@@ -65,144 +65,146 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: 215,
   },
-  submitButton  : {
-    margin : 30,
+  submitButton: {
+    margin: 30,
   },
-  inputFields : {
-      width : "100%",
-      display : "flex",
-      flexWrap : "wrap",
-      justifyContent : "space-evenly",
-      margin : theme.spacing(3),
-      "&>div" : {
-          width : "35%"
-      },
-      [theme.breakpoints.down("xs")] : {
-          "&>div" : {
-              width : "80%",
-              marginBottom : theme.spacing(1)
-          }
+  inputFields: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    margin: theme.spacing(3),
+    "&>div": {
+      width: "35%"
+    },
+    [theme.breakpoints.down("xs")]: {
+      "&>div": {
+        width: "80%",
+        marginBottom: theme.spacing(1)
       }
-  },
-  inputContainer : {
-      display : "flex",
-      alignItems : "center",
-      [theme.breakpoints.down("sm")] : {
-        "&>*" : {
-          fontSize : "10px"
-        }
-      }
-  },
-  timeInput : {
-    [theme.breakpoints.down("sm")] : {
-      marginBottom : "10px"
     }
   },
-  select : {
-    [theme.breakpoints.down("sm")] : {
+  inputContainer: {
+    display: "flex",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      "&>*": {
+        fontSize: "10px"
+      }
+    }
+  },
+  timeInput: {
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "10px"
+    }
+  },
+  select: {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
-      height : "30px",
+      height: "30px",
       alignItems: "center"
     }
   },
-  container : {
-      display : "flex",
-      minHeight : '200px',
-      width : "50%",
-      justifyContent : "center"
+  container: {
+    display: "flex",
+    minHeight: '200px',
+    width: "50%",
+    justifyContent: "center"
   },
-  paper : {
-    display : "flex",
-    minHeight : '150px',
-    width : "50%",
-    marginBottom : "20px",
-    flexWrap : "wrap",
-    alignContent : "flex-start",
-    padding : "10px",
-    [theme.breakpoints.down("sm")] : {
-      width : "70%",
-      minHeight : "120px"
+  paper: {
+    display: "flex",
+    minHeight: '150px',
+    width: "50%",
+    marginBottom: "20px",
+    flexWrap: "wrap",
+    alignContent: "flex-start",
+    padding: "10px",
+    [theme.breakpoints.down("sm")]: {
+      width: "70%",
+      minHeight: "120px"
     }
   },
-  chip : {
-    marginRight : "10px",
+  chip: {
+    marginRight: "10px",
     marginBottom: "10px",
-    fontSize : "12px",
-    [theme.breakpoints.down("sm")] : {
-      fontSize : "10px",
-      marginRight : "7px",
-      marginBottom : "7px"
+    fontSize: "12px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "10px",
+      marginRight: "7px",
+      marginBottom: "7px"
     }
-  }, 
-  submitButton : {
-    margin : "40px",
   },
-  card : {
-    width : 600, 
-    padding : "30px",
-    display : "flex",
-    alignItems : "center",
-    flexDirection : "column"
+  submitButton: {
+    margin: "40px",
   },
-  tabContainer : {
-    margin : "20px 0px"  
+  card: {
+    width: 600,
+    padding: "30px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
+  },
+  tabContainer: {
+    margin: "20px 0px"
   },
 }))
 
 
 const AddNewMeeting = (props) => {
   const classes = useStyles()
-  const {user,newMeet, setNewMeet, roomid} = useContext(currentUserContext)
-  const {changeSelectedMode,changeIndicatortab} = props
-  const localDate = new Date(new Date().getTime() + 330*60000);
-  const [err,setErr] = useState({})
-  const [startDate,setStartDate] = useState(localDate.toISOString().slice(0,19));
-  const [endDate,setEndDate] = useState(localDate.toISOString().slice(0,19)); 
+  const { user, newMeet, setNewMeet, roomId } = useContext(currentUserContext)
+  const { changeSelectedMode, changeIndicatortab } = props
+  const localDate = new Date(new Date().getTime() + 330 * 60000);
+  const [err, setErr] = useState({})
+  const [startDate, setStartDate] = useState(localDate.toISOString().slice(0, 19));
+  const [endDate, setEndDate] = useState(localDate.toISOString().slice(0, 19));
   const [nameValue, setNameValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
-  const [roomId, setRoomId] = useState(1)
-  const [section , setSectionValue] = useState("A")
+  const [roomid, setRoomid] = useState(1)
+  const [section, setSectionValue] = useState("A")
   const [open, setOpen] = useState(false)
   const [prePlannedClasses, setprePlannedClasses] = useState([])
   const [availableClassrooms, setAvailableClassrooms] = useState([])
-  const [openLoader,setOpenLoader] = useState(false)
+  const [openLoader, setOpenLoader] = useState(false)
   const changeNameValue = (e) => {
     setErr({})
-    const {value} = e.target
+    const { value } = e.target
     setNameValue(value)
-  } 
+  }
 
   const changeDescriptionValue = (e) => {
     setErr({})
-    const {value} = e.target
+    const { value } = e.target
     setDescriptionValue(value)
-  } 
+  }
 
   const handleRoomChange = (e) => {
-    const {value} = e.target
-    setRoomId(value)
+    const { value } = e.target
+    setRoomid(value)
   }
 
   const handleSectionChange = (e) => {
-    const {value} = e.target
+    const { value } = e.target
     setSectionValue(value)
   }
 
 
+
+
   const handleSubmit = async () => {
 
-    if(nameValue.length === 0) {
-      setErr({code : 0, error : "Meeting Name Feild is mandatory"})
+    if (nameValue.length === 0) {
+      setErr({ code: 0, error: "Meeting Name Feild is mandatory" })
       return;
     }
 
 
-    if(descriptionValue.length === 0) {
-      setErr({code : 1, error : "Meeting Desciption Feild is mandatory"})
+    if (descriptionValue.length === 0) {
+      setErr({ code: 1, error: "Meeting Desciption Feild is mandatory" })
       return;
     }
 
-    if(endDate < startDate) {
+    if (endDate < startDate) {
       alert("Invalid Meeting Times.")
       return;
     }
@@ -212,34 +214,34 @@ const AddNewMeeting = (props) => {
     let url = "http://localhost:5001/Classes/bookClassroom"
     try {
       const response = await axios.post(url, {
-      idroom : roomId,
-      idteacher : user.iduser,
-      title : descriptionValue,
-      startTime : startDate,
-      endTime : endDate,
-      section : section,
-      course : nameValue
+        idroom: roomId[roomid - 1],
+        idteacher: user.iduser,
+        title: descriptionValue,
+        startTime: startDate,
+        endTime: endDate,
+        section: section,
+        course: nameValue
       })
 
       console.log(response)
       setOpenLoader(false)
-      const {message, availableClassRooms, classesAlreadyScheduled} = response.data
-      if(message === "success") {
-        
+      const { message, availableClassRooms, classesAlreadyScheduled } = response.data
+      if (message === "success") {
+
         alert("New Meeting has been created")
         changeIndicatortab(0)
         changeSelectedMode("Dashboard")
-        setNewMeet(newMeet+1) 
+        setNewMeet(newMeet + 1)
         return;
       }
 
-      if(classesAlreadyScheduled.length > 0) {
+      if (classesAlreadyScheduled.length > 0) {
         setprePlannedClasses(classesAlreadyScheduled)
         setAvailableClassrooms(availableClassRooms)
         setOpen(true)
       }
 
-    } catch(error) {
+    } catch (error) {
       setOpenLoader(false)
       console.log(error)
     }
@@ -249,76 +251,80 @@ const AddNewMeeting = (props) => {
     setOpen(false)
   }
 
+  if (roomId) {
+    console.log(roomId);
+  }
+
   return (
-    <div className = {classes.root}>
-      <div className = {classes.head}>
-        <div className = {classes.name}>
+    <div className={classes.root}>
+      <div className={classes.head}>
+        <div className={classes.name}>
           BOOK A NEW CLASSROOM
         </div>
       </div>
       <Grid container justify="space-around">
-      <TextField
-        id="datetime-local"
-        label="Class Start Time"
-        type="datetime-local"
-        inputProps = {{min : `${localDate.toISOString().slice(0,19)}`}}
-        value={startDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true
-        }}
-        className = {classes.timeInput}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          setErr({})
-        }}
-      />
-      <TextField
-        id="datetime-local"
-        label="Class End Time"
-        type="datetime-local"
-        inputProps = {{min : `${localDate.toISOString().slice(0,19)}`}}
-        value={endDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true
-        }}
-        className = {classes.timeInput}
-        onChange = {(e) => {
-          setEndDate(e.target.value);
-          setErr({})
-        }}
-        onBlur={(e) => {
-          if(e.target.value < startDate) {
-            alert("Invalid Ending Time. Meeting can't end before it starts")
-            setEndDate(`${localDate.toISOString().slice(0,19)}`)
-            return;
-          }
-          setEndDate(e.target.value);
-        }}
-      />
-      <div className = {classes.select}>
-        <InputLabel id="demo-simple-select-label" style = {{fontSize : "12px"}}>ClassRoom</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={roomid}
-          onChange={handleRoomChange}
-        > {roomid ?
-           roomid.map(id=>{
-          <MenuItem value={id}>Room {id}</MenuItem>
-        }):
-        <></>
-        }
-        </Select>
-      </div>
+        <TextField
+          id="datetime-local"
+          label="Class Start Time"
+          type="datetime-local"
+          inputProps={{ min: `${localDate.toISOString().slice(0, 19)}` }}
+          value={startDate}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.timeInput}
+          onChange={(e) => {
+            setStartDate(e.target.value);
+            setErr({})
+          }}
+        />
+        <TextField
+          id="datetime-local"
+          label="Class End Time"
+          type="datetime-local"
+          inputProps={{ min: `${localDate.toISOString().slice(0, 19)}` }}
+          value={endDate}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.timeInput}
+          onChange={(e) => {
+            setEndDate(e.target.value);
+            setErr({})
+          }}
+          onBlur={(e) => {
+            if (e.target.value < startDate) {
+              alert("Invalid Ending Time. Meeting can't end before it starts")
+              setEndDate(`${localDate.toISOString().slice(0, 19)}`)
+              return;
+            }
+            setEndDate(e.target.value);
+          }}
+        />
+        <div className={classes.select}>
+          <InputLabel id="demo-simple-select-label" style={{ fontSize: "12px" }}>ClassRoom</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={roomid}
+            onChange={handleRoomChange}
+          > {roomId ?
+            roomId.map((id) =>
+              <MenuItem value={roomId.indexOf(id) + 1}>Room{id} </MenuItem>
+            ) :
+            <></>
+            }
+          </Select>
+        </div>
       </Grid>
-      <div className = {classes.inputFields}>
-        <TextInput required id="standard-required" value={nameValue} onChange={changeNameValue} variant="outlined" label="Name of the Course" helperText={err.code === 0 ? err.error : ""}/>
-        <TextInput required id="standard-required" value={descriptionValue} onChange={changeDescriptionValue} variant="outlined" label="Description of the Meeting" helperText={err.code === 1 ? err.error : ""}/>
+      <div className={classes.inputFields}>
+        <TextInput required id="standard-required" value={nameValue} onChange={changeNameValue} variant="outlined" label="Name of the Course" helperText={err.code === 0 ? err.error : ""} />
+        <TextInput required id="standard-required" value={descriptionValue} onChange={changeDescriptionValue} variant="outlined" label="Description of the Meeting" helperText={err.code === 1 ? err.error : ""} />
       </div>
-      <div className = {classes.select}>
-        <InputLabel id="demo-simple-select-label1" style = {{fontSize : "12px"}}>Section</InputLabel>
+      <div className={classes.select}>
+        <InputLabel id="demo-simple-select-label1" style={{ fontSize: "12px" }}>Section</InputLabel>
         <Select
           labelId="demo-simple-select-label1"
           id="demo-simple-select"
@@ -330,20 +336,20 @@ const AddNewMeeting = (props) => {
           <MenuItem value={'C'}>Section C</MenuItem>
         </Select>
       </div>
-      <div className = {classes.submitButton}><Button onClick = {handleSubmit} variant = "contained" color = "primary">Book the Class</Button></div>
+      <div className={classes.submitButton}><Button onClick={handleSubmit} variant="contained" color="primary">Book the Class</Button></div>
       {
-        openLoader ? 
-        <CircularProgress/>
-        : <></>
+        openLoader ?
+          <CircularProgress />
+          : <></>
       }
       <Modal
-      open = {open}
-      onClose={handleClose}
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <ModelInfo availableMeetingRooms = {availableClassrooms} prePlannedClasses = {prePlannedClasses}/>
-        
+        <ModelInfo availableMeetingRooms={availableClassrooms} prePlannedClasses={prePlannedClasses} />
+
       </Modal>
 
     </div>

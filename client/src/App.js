@@ -1,6 +1,6 @@
 import logo from './logo.svg';
-import {BrowserRouter as Router , Route , Switch, useHistory } from "react-router-dom";
-import React, {useEffect, useState , useRef} from 'react';
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
 import TopPageDesign from './components/topPageDesign'
 import Homepage from './components/homepage.js'
 import AddStudent from './components/adduserStudent'
@@ -23,49 +23,49 @@ function App() {
 
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(null);
-  const [roomid, setRoomid] = useState(null);
+  const [roomId, setRoomId] = useState(null);
   const [upcomingMeetings, setUpcomingMeetings] = useState({})
   const [newMeet, setNewMeet] = useState(0)
   const history = useHistory();
   const intervalIdRef = useRef();
-  
+
   useEffect(() => {
-    if(window.location.pathname === "/" || window.location.pathname === "/register" || window.location.pathname === "/login") return;
+    if (window.location.pathname === "/" || window.location.pathname === "/register" || window.location.pathname === "/login") return;
     console.log("APP.js useEffect is running-----");
     const previousUserJson = localStorage.getItem('user');
     const previousUser = JSON.parse(previousUserJson);
-    if(previousUser) {
+    if (previousUser) {
       const findUserById = async () => {
         let url = "http://localhost:5001/user/findUserById"
 
         try {
-          let response = await axios.get(url , {
-            params : {
-            iduser : previousUser.iduser
+          let response = await axios.get(url, {
+            params: {
+              iduser: previousUser.iduser
             }
           })
 
           history.push(`${window.location.pathname}`)
           setUser(previousUser);
 
-          url="http://localhost:5001/Classes/allClassrooms"
-          response=await axios.get(url)
-          const { allclassRooms, error} = response.data
-          setRoomid(allclassRooms)
+          url = "http://localhost:5001/Classes/allClassrooms"
+          response = await axios.get(url)
+          const { allclassRooms, error } = response.data
+          setRoomId(allclassRooms)
           console.log(allclassRooms)
 
-        } catch(err) {
+        } catch (err) {
           console.log(err)
           history.push('/login')
         }
       }
 
       findUserById();
-    }else {
+    } else {
       history.push('/login')
     }
 
-    
+
   }, [])
 
 
@@ -85,7 +85,7 @@ function App() {
   //             idUser : user.idUser
   //           }
   //         })
-          
+
   //         const {meetings} = response.data;
   //         meetings.sort((meet1, meet2) => {
   //           return moment(meet1.startTime) - moment(meet2.startTime)
@@ -105,13 +105,13 @@ function App() {
   //         console.log(error)
   //       }
   //     }
-      
+
   //     intervalIdRef.current = setInterval(getNewMeetings, 60000)
 
   //     getNewMeetings()
-      
+
   //   }
-    
+
   // }, [user, newMeet])
 
   const handleClose = () => {
@@ -120,29 +120,29 @@ function App() {
 
   return (
     <React.Fragment>
-      <currentUserContext.Provider value = {{user, setUser, newMeet, setNewMeet, upcomingMeetings, roomid, setRoomid}}>
+      <currentUserContext.Provider value={{ user, setUser, newMeet, setNewMeet, upcomingMeetings, roomId, setRoomId }}>
         <TopPageDesign />
-        
+
         <Switch>
-          <Route exact path = "/" component = {Homepage} />
+          <Route exact path="/" component={Homepage} />
         </Switch>
         <Switch>
-          <Route exact path = '/login' component = {Login} />
+          <Route exact path='/login' component={Login} />
         </Switch>
-        
+
         <Switch>
-          <Route exact path = '/profile' component = {ProfilePage} />
-        </Switch>
-        <Switch>
-          <Route exact path = "/adduserStudent" component = {AddStudent} />
+          <Route exact path='/profile' component={ProfilePage} />
         </Switch>
         <Switch>
-          <Route exact path = "/adduserTeacher" component = {AddTeacher} />
+          <Route exact path="/adduserStudent" component={AddStudent} />
         </Switch>
         <Switch>
-          <Route exact path = "/addRoom" component = {AddRoom} />
+          <Route exact path="/adduserTeacher" component={AddTeacher} />
         </Switch>
-        
+        <Switch>
+          <Route exact path="/addRoom" component={AddRoom} />
+        </Switch>
+
       </currentUserContext.Provider>
       {/* <Snackbar
         anchorOrigin={{
