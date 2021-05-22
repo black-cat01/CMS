@@ -21,8 +21,8 @@ import Tab from '@material-ui/core/Tab'
 
 import currentUserContext from '../context/userContext.js';
 
-import AddNewMeeting from './NewMeeting.js'
-import MyMeetings from './MyMeetings.js'
+import AddNewMeeting from './NewBooking.js'
+import MyMeetings from './MyClasses.js'
 import EditProfile from './EditProfile.js'
 import Dashboard from './Dashboard.js'
 import AllMeetings from './DisplayAllMeetings.js'
@@ -143,7 +143,7 @@ const ProfilePage = () => {
               {user.Type === "Teacher" || user.Type === "Student" ?
                 <Tab
                   className={classes.Tab}
-                  label={<span>View My Meetings</span>}
+                  label={<span>View My Classes</span>}
                   icon={<ViewIcon />}
                   key={"View My Meetings"}
                 />
@@ -153,7 +153,7 @@ const ProfilePage = () => {
               {user.Type === "Teacher" ?
                 <Tab
                   className={classes.Tab}
-                  label={<span>Add New Meeting</span>}
+                  label={<span>Book A Class</span>}
                   icon={<BookIcon />}
                   key={"Add New Meeting"}
                 /> : <></>

@@ -130,8 +130,8 @@ const ModelInfo = (props) => {
             <div className={classes.paper}>
                 <div className={classes.container}>
                     <Tabs className={classes.tabContainer} value={value} onChange={handleChange} aria-label="simple tabs example" centered>
-                        <Tab label="Pre Planned Meetings" {...a11yProps(0)} />
-                        <Tab label="Available Meeting Rooms" {...a11yProps(1)} />
+                        <Tab label="Classes Already Scheduled" {...a11yProps(0)} />
+                        <Tab label="Available ClassRooms" {...a11yProps(1)} />
                     </Tabs>
                     {value === 0 ?
                         <Table className={classes.table}>

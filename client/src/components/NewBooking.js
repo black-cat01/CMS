@@ -136,6 +136,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submitButton: {
     margin: "40px",
+    
   },
   card: {
     width: 600,
@@ -333,7 +334,7 @@ const AddNewMeeting = (props) => {
       </Grid>
       <div className={classes.inputFields}>
         <TextInput required id="standard-required" value={nameValue} onChange={changeNameValue} variant="outlined" label="Name of the Course" helperText={err.code === 0 ? err.error : ""} />
-        <TextInput required id="standard-required" value={descriptionValue} onChange={changeDescriptionValue} variant="outlined" label="Description of the Meeting" helperText={err.code === 1 ? err.error : ""} />
+        <TextInput required id="standard-required" value={descriptionValue} onChange={changeDescriptionValue} variant="outlined" label="Description of the Class" helperText={err.code === 1 ? err.error : ""} />
       </div>
       <div className={classes.select}>
         <InputLabel id="demo-simple-select-label1" style={{ fontSize: "12px" }}>Section</InputLabel>
