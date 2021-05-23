@@ -25,7 +25,7 @@ import AddNewMeeting from './NewBooking.js'
 import MyMeetings from './MyClasses.js'
 import EditProfile from './EditProfile.js'
 import Dashboard from './Dashboard.js'
-import AllMeetings from './DisplayAllMeetings.js'
+import AllMeetings from './DisplayAllClasses.js'
 
 import { useHistory } from 'react-router';
 
@@ -40,19 +40,29 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   root: {
-    display: 'flex',
+
+
     flexGrow: 1,
     minWidth: "100%",
     margin: "auto",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "&>header": {
-      minWidth: "100%",
-      alignItems: "center",
-      "&>div": {
-        minWidth: "100%"
-      }
-    }
+    //justifyContent: "center",
+    //alignItems: "center",
+    // "&>header": {
+    //   minWidth: "100%",
+    //   alignItems: "center",
+    //   "&>div": {
+    //     display: "flex", justifyContent: "center",
+    //     minWidth: "100%"
+    //   }
+  },
+  Scroller: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  Tabs: {
+    display: "flex",
+    minwidth: "100%",
+    justifyContent: "center"
   },
   Indicator: {
     height: 3,
@@ -119,13 +129,14 @@ const ProfilePage = () => {
         <div className={classes.root}>
           <AppBar position="static" color="default">
             <Tabs
+              className={classes.Tabs}
               value={value}
               onChange={handleChange}
               variant="scrollable"
               scrollButtons="on"
               indicatorColor="none"
               textColor="secondary"
-              classes={{ indicator: classes.Indicator }}
+              classes={{ indicator: classes.Indicator, scroller: classes.Scroller }}
               aria-label="scrollable article navigation bar"
             >
               <Tab
