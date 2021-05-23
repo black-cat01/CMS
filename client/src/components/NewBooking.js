@@ -136,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submitButton: {
     margin: "40px",
-    
+
   },
   card: {
     width: 600,
@@ -237,7 +237,7 @@ const AddNewMeeting = (props) => {
 
       if (message === "success") {
 
-        alert("New Meeting has been created")
+        alert("Class has been scheduled")
         changeIndicatortab(0)
         changeSelectedMode("Dashboard")
         setNewMeet(newMeet + 1)

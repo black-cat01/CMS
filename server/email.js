@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
     auth: {
-        user: 'classroom.management.system@outlook.com',
+        user: 'ClassroomManagementSystems@outlook.com',
         pass: 'booking@class'
     }
 });

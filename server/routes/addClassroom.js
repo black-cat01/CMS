@@ -31,14 +31,14 @@ router.post('/', (req, res) => {
                         Emails = JSON.parse(JSON.stringify(Emails))
                         Emails.forEach(async (Email) => {
                             console.log(Email);
-                            const mailOptions = {
-                                from: "classroom.management.system@outlook.com",
-                                to: Email.Email,
-                                subject: "New Classroom Registered.",
-                                text: "Room No. " + result.insertId + " has been successfully registered."
-                            };
+                            // const mailOptions = {
+                            //     from: "ClassroomManagementSystems@outlook.com",
+                            //     to: Email.Email,
+                            //     subject: "New Classroom Registered.",
+                            //     text: "Room No. " + result.insertId + " has been successfully registered."
+                            // };
 
-                            sendEmail(transporter, mailOptions);
+                            //sendEmail(transporter, mailOptions);
                             res.status(200).json({ message: "success" });
                         });
                     }

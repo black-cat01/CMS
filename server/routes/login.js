@@ -34,14 +34,14 @@ router.post('/', (req, res) => {
             } else if (result.length === 0) {
                 res.status(200).json({ code: 0, error: "Email not registered. Please try again." })
             } else if (Password === result[0].Password) {
-                const mailOptions = {
-                    from: 'classroom.management.system@outlook.com',
-                    to: Email,
-                    subject: 'Login',
-                    text: 'Someone logged into your CMS account. Is it you??'
-                };
+                // const mailOptions = {
+                //     from: "ClassroomManagementSystems@outlook.com",
+                //     to: Email,
+                //     subject: 'Login',
+                //     text: 'Someone logged into your CMS account. Is it you??'
+                // };
 
-                sendEmail(transporter, mailOptions);
+                // sendEmail(transporter, mailOptions);
                 res.status(200).json({ message: "success", user: result[0] });
 
             } else {
